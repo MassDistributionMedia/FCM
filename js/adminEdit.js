@@ -124,8 +124,13 @@ function pushChanges() {
     
     $j("#pushChanges").attr("disabled","disabled");
     
+	var src = document.location.href.replace(/\/[^\/]*$/, "/pushChanges.php");
+	
     if( pushChanges.actions.length > 0 )
-        $j.post("http://161.be/fb/fcm/pushChanges.php", {actions:JSON.stringify(pushChanges.actions)},function(data){console.log(data);});
+        $j.post(src, {actions:JSON.stringify(pushChanges.actions)},function(data){
+			$('<div class="console-item"></div>').appendTo("#adminConsole").html(data)
+				.delay(3000).fadeOut(1500, function(){$(this).remove();});
+		});
 }
 
 function adminOverlayCreate(e){
@@ -190,7 +195,7 @@ $j(document).ready(function() {
         $j("#switch-form").submit();
     });
     
- $j("#hotspotTour").click( tour);
+ $j("#hotspotTour").click(tour);
  
 });
 
@@ -205,7 +210,7 @@ function tour() {
         var pulse = $j('<div></div>');
         
         pulse.css({width:$th.width()+'px',height:$th.height()+'px',left:off.left+'px',top:off.top+'px',
-                opacity:'0',backgroundColor:'#FFC',position:'absolute',display:'block'})
+                opacity:'0',backgroundColor:'#FFC',position:'absolute',display:'block',zIndex:'5'})
             .appendTo(".body");
         
         pulse.delay(i*tour.stagTime).removeClass('hidden').animate({

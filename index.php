@@ -91,10 +91,10 @@ $j(document).ready(function() {
     
     $j("#featured-buttons a").click(function(e){
         $j("#featured-slides li").removeClass("selected");
-        $j($j(e.target).attr("href")).addClass("selected");
+        $j($j(e.target).closest("a").attr("href")).addClass("selected");
         
         $j("#featured-buttons li").removeClass("selected");
-        $j(e.target).parent().addClass("selected");
+        $j(e.target).parents("#featured-buttons li").addClass("selected");
         e.preventDefault();
     });
 });
@@ -114,10 +114,10 @@ $j(document).ready(function() {
     <button id="pushChanges">Save</button>
     <button id="hotspotTour">Tour</button>
 </div>
-
+<?php } ?>
 <div id="fb-root"> </div>
 <script type="text/javascript">
-
+<?php if( $visitorAdmin ) { ?>
 function sessionResponse (response) {
     if (response.session) {
         console.log(response);
@@ -163,6 +163,7 @@ function sessionResponse (response) {
         console.log("Disconnected");
     }
 }
+<?php } ?>
 
 window.fbAsyncInit = function() {
     FB.init({appId: '<?php echo $appId; ?>', status: true, cookie: true,
@@ -172,9 +173,11 @@ window.fbAsyncInit = function() {
     window.setTimeout(function() {
         FB.Canvas.setAutoResize();
     }, 1000);
+<?php if( $visitorAdmin ) { ?>
     
     FB.getLoginStatus(sessionResponse);
     $j("#fb-disconnect").click(function(){FB.api({method:'Auth.revokeAuthorization'}, sessionResponse);});
+<?php } ?>
 };
   (function() {
     var e = document.createElement('script'); e.async = true;
@@ -183,7 +186,6 @@ window.fbAsyncInit = function() {
     document.getElementById('fb-root').appendChild(e);
   }());
 </script>
-<?php } ?>
 
 <?php if( $visitorAdmin ) { ?>
 <div id="switchBox" class="hidden" title="Image Editor">

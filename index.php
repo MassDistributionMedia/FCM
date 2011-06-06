@@ -1,16 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
-
 <?php
 
 /* index.php
 http://j.mp/fcm-p1 */
 
+/* TODO: SECURITY! CURRENT CODE IS VERY INSECURE!
+ Need to implement nonces and session so the content cannot be hacked by directly calling our pushChanges.php
+ This will either require a DB or modifying server privileges so the XML folder is password protected. DB is still more secure, however.
+ Okay. Should we go wtih MySQL, PostgreSQL, or maybe even xQuery?
+DB requires installation and more configuration.
+XML is easier to distribute, though the password-protected the xml folder still requires a bit of configuration.
+If you go with DB, I prefer MySQL.
+Humm....
+Password protected like a protected directory?
+*/
+
 require_once('./src/facebook.php');
 
 $appId = '203223123047060';
 $appSecret = 'bfe919cd733f844342af3267b818ad95';
-
 
 $facebook = new Facebook(array(
     'appId'  => $appId,
@@ -31,6 +38,7 @@ if( $data['page'] ) {
     $visitorAdmin = $data['page']['admin'];
     $visitorLiked = $data['page']['liked'];
 }
+$visitorAdmin = true;
 
 $url = 'http';
 if( $_SERVER['HTTPS'] == 'on' ) { $url .= 's'; }
@@ -45,25 +53,38 @@ if( substr($urlPath, -1) != '/' ) { $urlPath .= '/'; }
 $ajaxSaveUrl = $urlPath . 'pushChanges.php';
 $ajaxUploadUrl = $urlPath . 'upload.php';
 
-/* TODO: SECURITY! CURRENT CODE IS VERY INSECURE!
- Need to implement nonces and session so the content cannot be hacked by directly calling our pushChanges.php
- This will either require a DB or modifying server privileges so the XML folder is password protected. DB is still more secure, however.
- Okay. Should we go wtih MySQL, 
-PostgreSQL, or maybe even xQuery?
-DB requires installation and more configuration.
-XML is easier to distribute, though the password-protected the xml folder still requires a bit of configuration.
-If you go with DB, I prefer MySQL.
-Humm....
-Password protected like a protected directory?
-*/
+/**
+ *  Given a file, i.e. /css/base.css, replaces it with a string containing the
+ *  file's mtime, i.e. /css/base.1221534296.css.
+ *  
+ *  @param $file  The file to be loaded.  Must be an absolute path (i.e.
+ *                starting with slash).
+ */
+function auto_version($file)
+{
+	if( !file_exists($file) )
+		return $file;
+	
+	$mtime = filemtime($file);
+	return preg_replace('{\\.([^./]+)$}', ".$mtime.\$1", $file);
+	
+	//if(strpos($file, '/') !== 0 || !file_exists($_SERVER['DOCUMENT_ROOT'] . $file))
+	//	return $file;
+	
+	//$mtime = filemtime($_SERVER['DOCUMENT_ROOT'] . $file);
+	//return preg_replace('{\\.([^./]+)$}', ".$mtime.\$1", $file2);
+}
+
 
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 
-<link href="reset.css" rel="stylesheet" type="text/css" /> 
-<link href="style.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo auto_version('style/reset.css');?>" rel="stylesheet" type="text/css" /> 
+<link href="<?php echo auto_version('style/style.css');?>" rel="stylesheet" type="text/css" />
  
 <title>Burger Mania FCM Test Page</title>
 
@@ -74,10 +95,10 @@ Password protected like a protected directory?
 <script type="text/javascript" src="js/jquery.form.min.js"></script>
 <script type="text/javascript" src="js/json2.min.js"></script>
 
-<script type="text/javascript" src="js/adminEdit.js"></script>
+<script type="text/javascript" src="<?php echo auto_version('js/adminEdit.js');?>"></script>
 
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<link href="admin.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo auto_version('style/admin.css');?>" rel="stylesheet" type="text/css" />
 <?php } ?>
 
 <script type="text/javascript">
@@ -103,13 +124,9 @@ $j(document).ready(function() {
 
 </head> 
 
-<body> 
-
- <div class="clear"></div>
-<br/>
-
+<body>
 <?php if( $visitorAdmin ) { ?>
-<div id="cms-buttons" style="position:fixed; background:#f4f2ff; padding:7px">
+<div id="cms-buttons">
     <button id="revertChanges">Revert</button>
     <button id="pushChanges">Save</button>
     <button id="hotspotTour">Tour</button>

@@ -2,7 +2,22 @@
 
 /* http://j.mp/fcm-p1 */
 
-header("Content-type: application/json");
+//header("Content-type: application/json");
+
+require_once('./src/facebook.php');
+
+$appId = '203223123047060';
+$appSecret = 'bfe919cd733f844342af3267b818ad95';
+
+$facebook = new Facebook(array(
+    'appId'  => $appId,
+    'secret' => $appSecret,
+    'cookie' => true,
+));
+
+$session = $facebook->getSession();
+
+var_dump($session);
 
 $changeList = json_decode(stripslashes($_POST["actions"]));
 

@@ -12,5 +12,6 @@
 #cms-buttons{ position:fixed; background:#f4f2ff; padding:7px; z-index:10; }
 div.body { margin-top:22px; }
 .admin-overlay {position:absolute; background:transparent url(overlay-tile.png) repeat; border:solid 1px #CCC; display:block;}
-/*#adminConsole {position:fixed; background:#f4f2ff; max-width:250px; top:5px; margin:5px auto; z-index:11;}
-	.console-item {padding:1em;}*/
+
+#adminConsole {position:fixed; background:#f4f2ff; max-width:250px; top:5px; margin:5px auto; z-index:11;}
+	.console-item {padding:1em;}

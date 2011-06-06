@@ -128,6 +128,7 @@ function pushChanges() {
 	
     if( pushChanges.actions.length > 0 )
         $j.post(src, {actions:JSON.stringify(pushChanges.actions)},function(data){
+			console.log(data);
 			$('<div class="console-item"></div>').appendTo("#adminConsole").html(data)
 				.delay(3000).fadeOut(1500, function(){$(this).remove();});
 		});
@@ -194,9 +195,10 @@ $j(document).ready(function() {
         console.log("File changed.");
         $j("#switch-form").submit();
     });
-    
- $j("#hotspotTour").click(tour);
- 
+	
+	$j("#hotspotTour").click(tour);
+	
+	$j('<div id="adminConsole"></div>').insertBefore("div.body");
 });
 
 function tour() {

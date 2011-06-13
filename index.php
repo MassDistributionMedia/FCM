@@ -14,31 +14,32 @@ Humm....
 Password protected like a protected directory?
 */
 
+require_once('config.php');
 require_once('./src/facebook.php');
 
-$appId = '203223123047060';
-$appSecret = 'bfe919cd733f844342af3267b818ad95';
+global $config;
+
+session_start();
+if( isset($_REQUEST['signed_request']) )
+	$_SESSION['signed_request'] = $_REQUEST['signed_request'];
 
 $facebook = new Facebook(array(
-    'appId'  => $appId,
-    'secret' => $appSecret,
+    'appId'  => $config['appId'],
+    'secret' => $config['appSecret'],
     'cookie' => true,
 ));
 
-$session = $facebook->getSession();
+$signed_request = $facebook->getSignedRequest();
 
-$signed_request = $_REQUEST["signed_request"];
-list($encoded_sig, $payload) = explode('.', $signed_request, 2);
-$data = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+$page_id = '';
+$page_admin = false;
+$like_status = false;
 
-$visitorAdmin = false;
-$visitorLike = false;
-
-if( $data['page'] ) {
-    $visitorAdmin = $data['page']['admin'];
-    $visitorLiked = $data['page']['liked'];
+if( $signed_request['page'] ) {
+	$page_id = $signed_request['page']['id'];
+    $page_admin = $signed_request['page']['admin'];
+    $like_status = $signed_request['page']['liked'];
 }
-$visitorAdmin = true;
 
 $url = 'http';
 if( $_SERVER['HTTPS'] == 'on' ) { $url .= 's'; }
@@ -86,11 +87,12 @@ function auto_version($file)
 <link href="<?php echo auto_version('style/reset.css');?>" rel="stylesheet" type="text/css" /> 
 <link href="<?php echo auto_version('style/style.css');?>" rel="stylesheet" type="text/css" />
  
-<title>Burger Mania FCM Test Page</title>
+<title>FCM Developer Page</title>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.cycle.all.min.js"></script>
 
-<?php if( $visitorAdmin ) { ?>
+<?php if( $page_admin ) { ?>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery.form.min.js"></script>
 <script type="text/javascript" src="js/json2.min.js"></script>
@@ -103,13 +105,9 @@ function auto_version($file)
 
 <script type="text/javascript">
 // This code is for the featured slider functionality.
-var selected;
-
 $j = jQuery.noConflict();
 
 $j(document).ready(function() {
-    selected = $j("#featured-buttons li.selected");
-    
     $j("#featured-buttons a").click(function(e){
         $j("#featured-slides li").removeClass("selected");
         $j($j(e.target).closest("a").attr("href")).addClass("selected");
@@ -125,16 +123,16 @@ $j(document).ready(function() {
 </head> 
 
 <body>
-<?php if( $visitorAdmin ) { ?>
+<?php if( $page_admin ) { ?>
 <div id="cms-buttons">
     <button id="revertChanges">Revert</button>
     <button id="pushChanges">Save</button>
     <button id="hotspotTour">Tour</button>
 </div>
 <?php } ?>
-<div id="fb-root"> </div>
+<div id="fb-root"></div>
 <script type="text/javascript">
-<?php if( $visitorAdmin ) { ?>
+<?php if( $page_admin ) { ?>
 function sessionResponse (response) {
     if (response.session) {
         console.log(response);
@@ -183,14 +181,14 @@ function sessionResponse (response) {
 <?php } ?>
 
 window.fbAsyncInit = function() {
-    FB.init({appId: '<?php echo $appId; ?>', status: true, cookie: true,
+    FB.init({appId: '<?php echo $config['appId']; ?>', status: true, cookie: true,
              xfbml: true});
     FB.Canvas.setSize();
     
     window.setTimeout(function() {
         FB.Canvas.setAutoResize();
     }, 1000);
-<?php if( $visitorAdmin ) { ?>
+<?php if( $page_admin ) { ?>
     
     FB.getLoginStatus(sessionResponse);
     $j("#fb-disconnect").click(function(){FB.api({method:'Auth.revokeAuthorization'}, sessionResponse);});
@@ -204,7 +202,7 @@ window.fbAsyncInit = function() {
   }());
 </script>
 
-<?php if( $visitorAdmin ) { ?>
+<?php if( $page_admin ) { ?>
 <div id="switchBox" class="hidden" title="Image Editor">
     <ul>
         <li><a href="#switchBox-general" title="General">General</a></li>

@@ -13,5 +13,5 @@
 div.body { margin-top:22px; }
 .admin-overlay {position:absolute; background:transparent url(overlay-tile.png) repeat; border:solid 1px #CCC; display:block;}
 
-#adminConsole {position:fixed; background:#f4f2ff; max-width:250px; top:5px; margin:5px auto; z-index:11;}
+#adminConsole {position:fixed; background:#f4f2ff; max-width:450px; top:5px; margin:60px 0 0 40px; z-index:11;}
 	.console-item {padding:1em;}

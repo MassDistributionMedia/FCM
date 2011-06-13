@@ -128,10 +128,20 @@ function pushChanges() {
 	
     if( pushChanges.actions.length > 0 )
         $j.post(src, {actions:JSON.stringify(pushChanges.actions)},function(data){
-			console.log(data);
-			$('<div class="console-item"></div>').appendTo("#adminConsole").html(data)
-				.delay(3000).fadeOut(1500, function(){$(this).remove();});
+			console_post(data);
 		});
+}
+
+
+/*
+ * Warning levels:
+ *	normal:		0
+ *  success:	1
+ *	error:		-1
+ */
+function console_post(message, warning) {
+	$j('<div class="console-item"></div>').html(message).prependTo("#adminConsole")
+		.delay(7000).fadeOut(2000, function(){$j(this).remove();});
 }
 
 function adminOverlayCreate(e){

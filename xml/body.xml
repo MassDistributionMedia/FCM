@@ -1,0 +1,87 @@
+<div class="body">
+    
+    <div id="featured">
+            <div id="featured-slides">
+                <ul>
+                    <li class="selected one" id="slide-one">
+                        <div class="left"><img id="img_1" src="uploads/Slider-01.png" alt="one dollar sliders" title="one dollar sliders"/></div>
+                   
+                                                <div class="readmore"><a href="#"><span>Read more...</span></a></div>
+                                        
+                                </li>
+                <li class="two" id="slide-two">
+                        <div class="left"><img id="img_2" src="uploads/burgerman-2d-slide-01-01.png" alt="Burger mascot dancing to Live Music" title=""/></div>
+                    
+                                                <div class="readmore"><a href="#"><span>Read more...</span></a></div>
+                                       
+                                </li>
+                <li class="three" id="slide-three">
+                        <div class="left"><img id="img_3" src="uploads/burgerman-3d-slide-01-01-01.png" alt="Burger mascot at the sliders stand" title=""/></div>
+                   
+                                                <div class="readmore"><a href="#"><span>Read more...</span></a></div>
+                                       
+                                </li>
+                <li class="four" id="slide-four">
+                        <div class="left"><img id="img_4" src="uploads/burgerman-4d-slide-01.png" alt="Burger mascot" title=""/></div>
+                   
+                                                <div class="readmore"><a href="#"><span>Read more...</span></a></div>
+                                        
+                                </li>
+             </ul>
+             <div class="hr"></div>
+         </div> <!-- end featured-slides -->
+         
+		 <br/>
+		 
+         <div id="featured-buttons">
+                 <ul>
+                    <li class="selected one"><a href="#slide-one"><span>1</span></a></li>
+                    <li class="two"><a href="#slide-two"><span>2</span></a></li>
+                    <li class="three"><a href="#slide-three"><span>3</span></a></li>
+                    <li class="four"><a href="#slide-four"><span>4</span></a></li>
+            </ul>
+         </div> <!-- end featured-buttons -->
+         
+         <div class="hr"></div>
+    </div> <!-- end featured -->
+ 
+ 	<br/>
+ 
+        <div id="main" class="main-top">
+            <div class="main-content">
+            <div id="title"><div class="bg-header-top"><div class="bg-header-main"><h1 id="h_5">Burger Mania</h1></div><div class="bg-header-bottom"></div></div></div>
+            
+            <div class="content">
+                <div class="left">
+                    <p id="p_5">Burger Mania is an event that is FREE to the Public and was designed to promote are restaurants to feature their "Best Burger" recipe for Professional and Public vote! <br/>
+					690 Old Trenton Road, West Windsor, NJ 08529<br/>
+					 August 6th 3pm - 8pm Sat: 3:00 pm - 8:00 pm<br/>
+					Burger Mania Promotes area Restaurants by sampling their best burger menu items to the general public for $1 sliders.</p>
+                    <div class="readmore"><a href="#"><span>Read more...</span></a></div>
+                </div>
+                <div class="right"><div class="img-holder"><img id="img_5" src="burger-pic.png" alt="Burger picture"/></div></div>
+                <div class="hr"></div><br/>
+            </div> <!-- end .content -->
+             
+         <br/>
+             
+            <div id="video">
+                    <div class="bg-header-top">
+                        <div class="bg-header-main">
+                        <h2 id="h_6">Interview with Nicks Cafe</h2>
+                        <div class="video-holder"><iframe width="425" height="349" src="http://www.youtube.com/embed/yC9FChVWk3I?wmode=opaque" frameborder="0" allowfullscreen="1"></iframe></div>
+                    </div>
+                    <div class="bg-header-bottom"></div>
+                </div>
+            </div> <!-- end #video -->
+            
+            <div id="copyright"><p id="p_6">© <a href="http://massdistributionmedia.com/">Mass Distribution Media</a></p></div>
+            
+                </div> <!-- end .main-content -->
+                <div class="main-bottom"></div>
+        </div> <!-- end #main -->
+    <div id="footer">
+        <div id="logo-acmarketing" class="img-holder"><img id="img_6" src="logo-acmarketing.jpg" alt="AC Marketing Logo"/></div>
+            <div id="logo-pbr" class="img-holder"><img id="img_7" src="logo-pbr.png" alt="PBR Logo"/></div>
+    </div>
+</div> <!-- end .body -->

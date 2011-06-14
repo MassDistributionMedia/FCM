@@ -1,3 +1,1 @@
-php_extensions: [curl,
-	mysql]
-
+php_extensions: [curl, mysql]

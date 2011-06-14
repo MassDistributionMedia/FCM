@@ -14,8 +14,6 @@ Humm....
 Password protected like a protected directory?
 */
 
-phpinfo();
-
 require_once('config.php');
 require_once('./src/facebook.php');
 

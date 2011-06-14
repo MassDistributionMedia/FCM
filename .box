@@ -1,1 +1,2 @@
 php_extensions: [curl, mysql]
+url_rewrites ^(.*)\.[\d]{10}\.(css|js)$ $1.$2
